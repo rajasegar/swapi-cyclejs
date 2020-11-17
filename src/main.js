@@ -1,26 +1,20 @@
 import xs from 'xstream';
 import dropRepeats from 'xstream/extra/dropRepeats';
-import { makeDOMDriver, h1, div, p, nav, span, br,ul, li, a } from '@cycle/dom';
+import { makeDOMDriver } from '@cycle/dom';
 import { run } from '@cycle/run';
 import { makeHashHistoryDriver } from '@cycle/history';
 import { makeHTTPDriver } from '@cycle/http';
+import Snabbdom from 'snabbdom-pragma';
 
 
 function navigation(pathname) {
-  return nav([
-    span({
-      dataset: { page: 'home' },
-      class: { 'active' : pathname === '/home' }
-    }, 'Home'),
-    span({
-      dataset: { page: 'people' },
-      class: { 'active' : pathname === '/people' }
-    }, 'People'),
-    span({
-      dataset: { page: 'planets' },
-      class: { 'active' : pathname === '/planets' }
-    }, 'Planets')
-  ]);
+  return (
+    <nav>
+      <span data-page="home" class={{'active': pathname === '/home' }}>Home</span>
+      <span data-page="people" class={{'active': pathname === '/people' }}>People</span>
+      <span data-page="planets" class={{'active': pathname === '/planets' }}>Planets</span>
+    </nav>
+  );
 }
 
 const getPeople$ = xs.of({
@@ -29,9 +23,11 @@ const getPeople$ = xs.of({
 });
 
 function homePage() {
-  return div([
-    h1('Home page')
-  ]);
+  return (
+    <div>
+      <h1>Star wars - swapi</h1>
+    </div>
+  );
 }
 
 function peoplePage(http$) {
@@ -42,22 +38,26 @@ function peoplePage(http$) {
 
   const peopleList = people$.map(people => people.map(p => p.name));
 
-  return div([
-    h1('People'),
-    peopleList
-  ]);
+  return (
+    <div>
+      <h1>People</h1>
+        { peopleList }
+    </div>
+  );
 }
 
 function planetsPage() {
-  return div([
-    h1('Planets')
-  ]);
+  return (
+    <div>
+      <h1>Planes</h1>
+    </div>
+  );
 }
 
 function view(history$, http$) {
   return history$.map(history => {
     const { pathname } = history;
-    let page = h1('404 not found');
+    let page = <h1>404 not found</h1>;
 
     if(pathname === '/home') {
       page = homePage();
@@ -67,11 +67,13 @@ function view(history$, http$) {
       page = planetsPage();
     }
 
-    return div([
-      navigation(pathname),
-      page,
-      br()
-    ]);
+    return (
+      <div>
+        {navigation(pathname)}
+        {page}
+        <br/>
+      </div>
+    );
 
   });
 }
