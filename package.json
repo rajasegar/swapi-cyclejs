@@ -1,0 +1,28 @@
+{
+  "name": "swapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify src/main.js -t babelify -o dist/bundle.js",
+    "start": "watchify src/main.js -t babelify -o dist/bundle.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@cycle/dom": "^22.8.0",
+    "@cycle/history": "^7.4.0",
+    "@cycle/http": "^15.4.0",
+    "@cycle/run": "^5.5.0",
+    "xstream": "^11.14.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "babelify": "^10.0.0",
+    "browserify": "^17.0.0",
+    "watchify": "^3.11.1"
+  }
+}
