@@ -24,7 +24,7 @@ module.exports = {
           options: {
             "presets": ['@babel/preset-env'],
             "plugins": [
-              "syntax-jsx",
+              "@babel/plugin-syntax-jsx",
               ["transform-react-jsx", { "pragma": "Snabbdom.createElement"}]
             ]
           }
